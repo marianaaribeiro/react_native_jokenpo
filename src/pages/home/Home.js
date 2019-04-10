@@ -21,50 +21,55 @@ export default class App extends Component{
             case 0: escolhaC = 'Pedra' ; break;
             case 1: escolhaC = 'Papel'; break;
             case 2: escolhaC = 'Tesoura'; break;
+            default: escolhaC = '';
         }
 
         var result ='';
 
         if(escolhaC == 'Pedra'){
-            if(escolhaUsuario = 'Pedra'){
+            if(escolhaUsuario == 'Pedra'){
                 result = 'Empate'
             }
-            if(escolhaUsuario = 'Papel'){
+            if(escolhaUsuario == 'Papel'){
                 result = 'Você Ganhou'
             }
-            if(escolhaUsuario = 'Tesoura'){
+            if(escolhaUsuario == 'Tesoura'){
                 result = 'Game Over'
             }
         }
         
         if(escolhaC == 'Papel'){
-            if(escolhaUsuario = 'Pedra'){
+            if(escolhaUsuario == 'Pedra'){
                 result = 'Game Over'
             }
-            if(escolhaUsuario = 'Papel'){
+            if(escolhaUsuario == 'Papel'){
                 result = 'Empate'
             }
-            if(escolhaUsuario = 'Tesoura'){
+            if(escolhaUsuario == 'Tesoura'){
                 result = 'Você Ganhou'
             }
         }
         if(escolhaC == 'Tesoura'){
-            if(escolhaUsuario = 'Pedra'){
+            if(escolhaUsuario == 'Pedra'){
                 result = 'Você Ganhou'
             }
-            if(escolhaUsuario = 'Papel'){
+            if(escolhaUsuario == 'Papel'){
                 result = 'Game Over'
             }
-            if(escolhaUsuario = 'Tesoura'){
+            if(escolhaUsuario == 'Tesoura'){
                 result = 'Empate'
             }
         }
+
+       
+
+        
 
         this.setState({escolhaUsuario: escolhaUsuario, escolhaComputador: escolhaC, result: result});
 
     }
   render() {
-      const {txt,txtResult, topo, topoImg, btn, painelAcoes, btnPedra, btnPapel, btnTesoura, corpo} = estilos;
+      const {txtResult, topo, topoImg, btn, painelAcoes, btnPedra, btnPapel, btnTesoura, corpo} = estilos;
     return (
         <View>
             <View style={topo}>
@@ -82,16 +87,48 @@ export default class App extends Component{
                  </View> 
             </View>
             <View style={corpo}> 
-                <Text style={txt}>Escolha do usuário: {this.state.escolhaUsuario}</Text>
-                <Image source={require('../../img/papel.png')}></Image>
-                <Text style={txt}>Escolha do computador: {this.state.escolhaComputador}</Text>
-                <Image source={require('../../img/papel.png')}></Image>
+                <Icone  escolha={this.state.escolhaUsuario} jogador='Escolha do Jogador:'>{this.state.escolhaUsuario}</Icone>
+                <Icone escolha={this.state.escolhaComputador} jogador='Escolha do Jogo:'></Icone>
                 <Text style={txtResult}>{this.state.result}</Text>
-            </View>
+               </View>
+
             
         </View>
     );
   }
+}
+
+class Icone extends Component{
+    render(){
+        const {txt, img} = estilos;
+  
+        if(this.props.escolha === 'Pedra'){
+            return(
+                <View style={img}>
+                <Text style={txt}>{this.props.jogador}</Text>
+                <Image  source={require('../../img/pedra.png')}/>
+                </View>
+            )
+        } else if(this.props.escolha === 'Papel'){
+            return(
+                <View style={img}>
+                <Text style={txt}>{this.props.jogador}</Text>
+                <Image source={require('../../img/papel.png')}/>
+                </View>
+            )
+        } else if(this.props.escolha === 'Tesoura'){
+            return(
+                <View style={img}>
+                <Text style={txt}>{this.props.jogador}</Text>
+                <Image  source={require('../../img/tesoura.png')}/>
+                </View>
+            )
+        } else {
+            return false;
+        }
+
+        
+    }
 }
 
 const estilos ={
@@ -101,7 +138,6 @@ const estilos ={
         backgroundColor: '#faa7e565',
     },
     corpo:{
-        justifyContent: 'center',
         alignItems:'center',
         paddingTop: 20,
     },
@@ -137,6 +173,10 @@ const estilos ={
         fontSize:30,
         color: 'red',
         padding: 20,
+    },
+    img:{
+        justifyContent: 'center',
+        alignItems:'center',
     }
 }
 
